@@ -1,18 +1,10 @@
+const POSSIBLE_Y_VALUES = [60, 143, 236];
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x = getRandomInt(-200,-50);
-    var row = getRandomInt(1,3);
-    if(row == 1){
-        this.y = 55;
-    }
-    if(row == 2){
-        this.y = 145;
-    }
-    if(row == 3){
-        this.y = 230;
-    }
+    this.y = POSSIBLE_Y_VALUES[Math.floor(Math.random() * POSSIBLE_Y_VALUES.length)];
     this.speed = getRandomInt(50,300);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -31,22 +23,12 @@ Enemy.prototype.update = function(dt) {
         this.x = getRandomInt(-200,-50);
     }
 
-    if (player.y == -17) {
-    setTimeout(function() {
-      playAgain();
-    }, 500);
-    }
 
     if (player.y + 41 >= this.y && player.x <= this.x + 60 && player.y <= this.y + 60 && player.x + 65 >= this.x) {
-        playAgain();
+        player.x = 200;
+        player.y = 383;
     }
 };
-
-
-var playAgain = function(){
-    player.x = 200;
-    player.y = 383;
-}
 
 
 // Draw the enemy on the screen, required method for game
@@ -63,7 +45,17 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 };
 
+var didHeWin = function(player){
+    if (player.y == -17) {
+    setTimeout(function() {
+        player.x = 200;
+        player.y = 383;
+    }, 500);
+    }
+}
+
 Player.prototype.update = function() {
+    didHeWin(this);
 }
 
 Player.prototype.render = function() {
@@ -72,32 +64,32 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(key) {
     if (key == 'left') {
-        player.x -= 100;
-        if (player.x < 0) {
-        player.x = 0;
+        this.x -= 100;
+        if (this.x < 0) {
+        this.x = 0;
     }
     }
 
     if (key == 'up') {
-        player.y -= 80;
-        if (player.y < -17 ) {
-        player.y = -17;
+        this.y -= 80;
+        if (this.y < -17 ) {
+        this.y = -17;
     }
     }
 
     if (key == 'right') {
-        player.x += 100;
-        if (player.x > 400) {
-        player.x = 400;
+        this.x += 100;
+        if (this.x > 400) {
+        this.x = 400;
     }
     }
     if (key == 'down') {
-        player.y += 80;
-        if (player.y > 383 ) {
-        player.y = 383;
+        this.y += 80;
+        if (this.y > 383 ) {
+        this.y = 383;
     }
     }
-    console.log(player.x+"   "+player.y);
+    console.log(this.x+"   "+this.y);
     console.log(key);
 };
 
