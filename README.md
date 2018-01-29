@@ -8,4 +8,5 @@ Use the arrow keys to move the player across the board.
 Once the player reaches the water the game is won.
 
 ##How to run:
-click on this link http://htmlpreview.github.io/?https://github.com/SaadAljammaz/saad-s-arcade-game/blob/master/index.html and enjoy (:
+download all files here and open the index.html file on your browser
+or click on this link http://htmlpreview.github.io/?https://github.com/SaadAljammaz/saad-s-arcade-game/blob/master/index.html and enjoy (:

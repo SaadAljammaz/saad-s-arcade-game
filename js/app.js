@@ -21,6 +21,8 @@ Enemy.prototype.update = function(dt) {
 
     if (this.x >= 550) {
         this.x = getRandomInt(-200,-50);
+        this.y = POSSIBLE_Y_VALUES[Math.floor(Math.random() * POSSIBLE_Y_VALUES.length)];
+        this.speed = getRandomInt(50,300);
     }
 
 
@@ -45,57 +47,56 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 };
 
-var didHeWin = function(player){
-    if (player.y == -17) {
+Player.prototype.winning = function(){
+    var self = this;
+    if (self.y == -17) {
     setTimeout(function() {
-        player.x = 200;
-        player.y = 383;
+        self.x = 200;
+        self.y = 383;
     }, 500);
     }
 }
 
 Player.prototype.update = function() {
-    didHeWin(this);
-}
+    player.winning();
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function(key) {
-    if (key == 'left') {
-        this.x -= 100;
-        if (this.x < 0) {
-        this.x = 0;
+    if(this.y != -17){
+        if (key == 'left') {
+            this.x -= 100;
+            if (this.x < 0) {
+                this.x = 0;
+            }
+        }
+        if (key == 'up') {
+            this.y -= 80;
+            if (this.y < -17 ) {
+                this.y = -17;
+            }
+        }
+        if (key == 'right') {
+            this.x += 100;
+            if (this.x > 400) {
+                this.x = 400;
+            }
+        }
+        if (key == 'down') {
+            this.y += 80;
+            if (this.y > 383 ) {
+                this.y = 383;
+            }
+        }
     }
-    }
-
-    if (key == 'up') {
-        this.y -= 80;
-        if (this.y < -17 ) {
-        this.y = -17;
-    }
-    }
-
-    if (key == 'right') {
-        this.x += 100;
-        if (this.x > 400) {
-        this.x = 400;
-    }
-    }
-    if (key == 'down') {
-        this.y += 80;
-        if (this.y > 383 ) {
-        this.y = 383;
-    }
-    }
-    console.log(this.x+"   "+this.y);
-    console.log(key);
 };
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 // Now instantiate your objects.
 var enemy1 = new Enemy();
